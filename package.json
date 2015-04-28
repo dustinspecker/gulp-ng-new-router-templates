@@ -1,0 +1,40 @@
+{
+  "name": "gulp-ng-new-router-templates",
+  "version": "0.0.0",
+  "description": "Gulp plugin for injecting template paths into $componentLoaderProvider",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "dustinspecker/gulp-ng-new-router-templates",
+  "author": {
+    "name": "Dustin Specker",
+    "email": "DustinSpecker@DustinSpecker.com",
+    "url": "https://github.com/dustinspecker"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec",
+    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "angular",
+    "componentloader",
+    "router",
+    "ngnewrouter"
+  ],
+  "dependencies": {
+    "lodash": "^3.7.0",
+    "through2": "^0.6.3"
+  },
+  "devDependencies": {
+    "coveralls": "^2.11.1",
+    "gulp-util": "^3.0.3",
+    "istanbul": "^0.3.0",
+    "mocha": "^2.0.0"
+  }
+}
