@@ -36,6 +36,8 @@ describe('gulp-ng-new-router-templates', function () {
                   'return {',
                   '\'home\': \'home/home.tpl.html\'',
                   '}[name];',
+                  '});',
+                  '});',
                   '})();'].join('');
 
       stream.on('data', function (file) {
@@ -71,6 +73,8 @@ describe('gulp-ng-new-router-templates', function () {
                   '\'hello\': \'home/hello/hello.html\',',
                   '\'home\': \'home/home.html\'',
                   '}[name];',
+                  '});',
+                  '});',
                   '})();'].join('');
 
       stream.on('data', function (file) {
