@@ -71,7 +71,7 @@ Name of file created with component template mapping.
 Module to use for $componentLoaderProvider. Commonly, it's the top-level module.
 
 ## Projects using gulp-ng-new-router-templates
-- [angular-new-router-example](https://github.com/dustinspecker/gulp-ng-new-router-templates)
+- [angular-new-router-example](https://github.com/dustinspecker/angular-new-router-example)
 
 ## License
 MIT
