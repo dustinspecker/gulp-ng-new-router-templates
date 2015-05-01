@@ -49,14 +49,14 @@ gulp.task('injectTemplatePaths', function () {
 `app/component-templates.js` contents will be
 ```js
 (function () {
-  angular.module('awesomeApp').config(function ($componentLoaderProvider) {
+  angular.module('awesomeApp').config(['$componentLoaderProvider', function ($componentLoaderProvider) {
     $componentLoaderProvider.setTemplateMapping(function (name) {
       return {
         'hello': 'home/hello/hello.tpl.html',
         'home': 'home/home.tpl.html'
       }[name];
     });
-  });
+  }]);
 })();
 ```
 

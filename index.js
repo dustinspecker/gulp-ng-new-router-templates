@@ -8,7 +8,7 @@ var _ = require('lodash')
 module.exports = function (options) {
   var files = []
     , content = ''
-    , footer = '});}());'
+    , footer = '}]);}());'
     , defaults, header;
 
   defaults = {
@@ -20,7 +20,8 @@ module.exports = function (options) {
   options = _.merge(defaults, options);
 
   header = ['(function () {',
-            'angular.module(\'<%= moduleName %>\').config(function ($componentLoaderProvider) {'].join('');
+            'angular.module(\'<%= moduleName %>\')',
+            '.config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {'].join('');
 
   return through.obj(function (file, encoding, next) {
     if (!file || file.isNull()) {
