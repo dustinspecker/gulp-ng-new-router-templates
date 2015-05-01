@@ -12,7 +12,7 @@ describe('gulp-ng-new-router-templates', function () {
 
       expected = ['(function () {',
                   'angular.module(\'app\').config(function ($componentLoaderProvider) {',
-                  '})();'].join('');
+                  '});}());'].join('');
 
       stream.on('data', function (file) {
         assert(file.contents.toString() === expected);
@@ -38,7 +38,7 @@ describe('gulp-ng-new-router-templates', function () {
                   '}[name];',
                   '});',
                   '});',
-                  '})();'].join('');
+                  '}());'].join('');
 
       stream.on('data', function (file) {
         assert(file.contents.toString() === expected);
@@ -75,7 +75,7 @@ describe('gulp-ng-new-router-templates', function () {
                   '}[name];',
                   '});',
                   '});',
-                  '})();'].join('');
+                  '}());'].join('');
 
       stream.on('data', function (file) {
         assert(file.contents.toString() === expected);

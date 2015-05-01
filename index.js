@@ -8,7 +8,7 @@ var _ = require('lodash')
 module.exports = function (options) {
   var files = []
     , content = ''
-    , footer = '})();'
+    , footer = '});}());'
     , defaults, header;
 
   defaults = {
@@ -53,7 +53,7 @@ module.exports = function (options) {
       content = [
                   '$componentLoaderProvider.setTemplateMapping(function (name) {',
                   'return {'
-                ].join('') + content + '}[name];});});';
+                ].join('') + content + '}[name];});';
     }
 
     templates = _.template(header + content + footer)(options);
