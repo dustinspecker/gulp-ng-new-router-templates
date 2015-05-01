@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('lodash')
+  , eol = require('os').EOL
   , gutil = require('gulp-util')
   , path = require('path')
   , pkg = require('./package.json')
@@ -8,8 +9,7 @@ var _ = require('lodash')
 module.exports = function (options) {
   var files = []
     , content = ''
-    , footer = '}]);}());'
-    , defaults, header;
+    , defaults, footer, header;
 
   defaults = {
     extension: '.tpl.html',
@@ -19,9 +19,13 @@ module.exports = function (options) {
 
   options = _.merge(defaults, options);
 
-  header = ['(function () {',
-            'angular.module(\'<%= moduleName %>\')',
-            '.config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {'].join('');
+  header = ['(function () {' + eol,
+            '  angular' + eol,
+            '    .module(\'<%= moduleName %>\')' + eol,
+            '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol].join('');
+
+  footer = ['    }]);' + eol,
+            '}());'].join('');
 
   return through.obj(function (file, encoding, next) {
     if (!file || file.isNull()) {
@@ -42,19 +46,21 @@ module.exports = function (options) {
       content = files.map(function (file) {
         var component;
         // `'component-name': `
-        component = '\'' + path.basename(file.path).replace(options.extension, '') + '\': ';
+        component = '          \'' + path.basename(file.path).replace(options.extension, '') + '\': ';
         // `'component-name': 'relative/path/to/component-name.html'
         component += '\'' + path.relative(file.base, file.path).replace(/\\/g, '/') + '\'';
         return component;
-      }).join(',');
+      }).join(',' + eol);
       // $componentLoaderProvider.setTemplateMapping(function (name) {
       //   return {
       //     'component-name': 'relative/path/to/component-name.html'
       //   }[name];
       content = [
-                  '$componentLoaderProvider.setTemplateMapping(function (name) {',
-                  'return {'
-                ].join('') + content + '}[name];});';
+                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
+                  '        return {' + eol
+                ].join('') + content + eol;
+      content += ['        }[name];' + eol,
+                 '      });' + eol].join('');
     }
 
     templates = _.template(header + content + footer)(options);

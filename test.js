@@ -1,6 +1,7 @@
 /* global describe, it */
 'use strict';
 var assert = require('assert')
+  , eol = require('os').EOL
   , gutil = require('gulp-util')
   , ngNewRouterTemplates = require('./');
 
@@ -10,9 +11,12 @@ describe('gulp-ng-new-router-templates', function () {
       var stream = ngNewRouterTemplates()
         , expected;
 
-      expected = ['(function () {',
-                  'angular.module(\'app\').config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {',
-                  '}]);}());'].join('');
+      expected = ['(function () {' + eol,
+                  '  angular' + eol,
+                  '    .module(\'app\')' + eol,
+                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
+                  '    }]);' + eol,
+                  '}());'].join('');
 
       stream.on('data', function (file) {
         assert(file.contents.toString() === expected);
@@ -30,14 +34,16 @@ describe('gulp-ng-new-router-templates', function () {
       var stream = ngNewRouterTemplates()
         , expected;
 
-      expected = ['(function () {',
-                  'angular.module(\'app\').config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {',
-                  '$componentLoaderProvider.setTemplateMapping(function (name) {',
-                  'return {',
-                  '\'home\': \'home/home.tpl.html\'',
-                  '}[name];',
-                  '});',
-                  '}]);',
+      expected = ['(function () {' + eol,
+                  '  angular' + eol,
+                  '    .module(\'app\')' + eol,
+                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
+                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
+                  '        return {' + eol,
+                  '          \'home\': \'home/home.tpl.html\'' + eol,
+                  '        }[name];' + eol,
+                  '      });' + eol,
+                  '    }]);' + eol,
                   '}());'].join('');
 
       stream.on('data', function (file) {
@@ -66,16 +72,17 @@ describe('gulp-ng-new-router-templates', function () {
         moduleName: 'test'
       });
 
-      expected = ['(function () {',
-                  'angular.module(\'test\')',
-                  '.config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {',
-                  '$componentLoaderProvider.setTemplateMapping(function (name) {',
-                  'return {',
-                  '\'hello\': \'home/hello/hello.html\',',
-                  '\'home\': \'home/home.html\'',
-                  '}[name];',
-                  '});',
-                  '}]);',
+      expected = ['(function () {' + eol,
+                  '  angular' + eol,
+                  '    .module(\'test\')' + eol,
+                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
+                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
+                  '        return {' + eol,
+                  '          \'hello\': \'home/hello/hello.html\',' + eol,
+                  '          \'home\': \'home/home.html\'' + eol,
+                  '        }[name];' + eol,
+                  '      });' + eol,
+                  '    }]);' + eol,
                   '}());'].join('');
 
       stream.on('data', function (file) {
