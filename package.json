@@ -14,6 +14,8 @@
     "node": ">=0.10.0"
   },
   "scripts": {
+    "prepublish": "npm test",
+    "pretest": "jshint index.js && jshint test.js && jscs index.js && jscs test.js && eslint index.js && eslint test.js",
     "test": "istanbul cover ./node_modules/mocha/bin/_mocha -- -R spec",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
@@ -34,7 +36,10 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.1",
+    "eslint": "^0.20.0",
     "istanbul": "^0.3.0",
+    "jscs": "^1.13.1",
+    "jslint": "^0.9.0-pre006",
     "mocha": "^2.0.0"
   }
 }

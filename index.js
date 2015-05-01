@@ -1,6 +1,6 @@
 'use strict';
 var _ = require('lodash')
-  , gutil = require ('gulp-util')
+  , gutil = require('gulp-util')
   , path = require('path')
   , pkg = require('./package.json')
   , through = require('through2');
