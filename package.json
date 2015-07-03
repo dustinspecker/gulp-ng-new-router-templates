@@ -32,11 +32,11 @@
   "dependencies": {
     "gulp-util": "^3.0.3",
     "lodash": "^3.7.0",
-    "through2": "^0.6.3"
+    "through2": "^2.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.1",
-    "eslint": "^0.20.0",
+    "eslint": "^0.24.0",
     "istanbul": "^0.3.0",
     "jscs": "^1.13.1",
     "jshint": "^2.7.0",
