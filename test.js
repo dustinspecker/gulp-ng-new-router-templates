@@ -1,24 +1,26 @@
 /* global describe, it */
 'use strict';
-var assert = require('assert')
-  , eol = require('os').EOL
-  , gutil = require('gulp-util')
-  , ngNewRouterTemplates = require('./lib/');
+import assert from 'assert';
+import {EOL} from 'os';
+import gutil from 'gulp-util';
+import ngNewRouterTemplates from './lib/';
 
-describe('gulp-ng-new-router-templates', function () {
-  describe('no file input', function () {
-    it('should return no templates injected', function (done) {
-      var stream = ngNewRouterTemplates()
+describe('gulp-ng-new-router-templates', () => {
+  describe('no file input', () => {
+    it('should return no templates injected', (done) => {
+      let stream = ngNewRouterTemplates()
         , expected;
 
-      expected = ['(function () {' + eol,
-                  '  angular' + eol,
-                  '    .module(\'app\')' + eol,
-                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
-                  '    }]);' + eol,
-                  '}());'].join('');
+      expected = [
+        '(function () {' + EOL,
+        '  angular' + EOL,
+        '    .module(\'app\')' + EOL,
+        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
+        '    }]);' + EOL,
+        '}());'
+      ].join('');
 
-      stream.on('data', function (file) {
+      stream.on('data', (file) => {
         assert(file.contents.toString() === expected);
         done();
       });
@@ -29,24 +31,26 @@ describe('gulp-ng-new-router-templates', function () {
     });
   });
 
-  describe('one file input', function () {
-    it('should have home template in templates.js for app module', function (done) {
-      var stream = ngNewRouterTemplates()
+  describe('one file input', () => {
+    it('should have home template in templates.js for app module', (done) => {
+      let stream = ngNewRouterTemplates()
         , expected;
 
-      expected = ['(function () {' + eol,
-                  '  angular' + eol,
-                  '    .module(\'app\')' + eol,
-                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
-                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
-                  '        return {' + eol,
-                  '          \'home\': \'home/home.tpl.html\'' + eol,
-                  '        }[name];' + eol,
-                  '      });' + eol,
-                  '    }]);' + eol,
-                  '}());'].join('');
+      expected = [
+        '(function () {' + EOL,
+        '  angular' + EOL,
+        '    .module(\'app\')' + EOL,
+        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
+        '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
+        '        return {' + EOL,
+        '          \'home\': \'home/home.tpl.html\'' + EOL,
+        '        }[name];' + EOL,
+        '      });' + EOL,
+        '    }]);' + EOL,
+        '}());'
+      ].join('');
 
-      stream.on('data', function (file) {
+      stream.on('data', (file) => {
         assert(file.contents.toString() === expected);
         assert(file.path === 'templates.js');
         done();
@@ -62,9 +66,9 @@ describe('gulp-ng-new-router-templates', function () {
     });
   });
 
-  describe('multiple file inputs with options', function () {
-    it('should have home and hello templates in component-templates.js for test module', function (done) {
-      var expected, stream;
+  describe('multiple file inputs with options', () => {
+    it('should have home and hello templates in component-templates.js for test module', (done) => {
+      let expected, stream;
 
       stream = ngNewRouterTemplates({
         extension: '.html',
@@ -72,20 +76,22 @@ describe('gulp-ng-new-router-templates', function () {
         moduleName: 'test'
       });
 
-      expected = ['(function () {' + eol,
-                  '  angular' + eol,
-                  '    .module(\'test\')' + eol,
-                  '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol,
-                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
-                  '        return {' + eol,
-                  '          \'hello\': \'home/hello/hello.html\',' + eol,
-                  '          \'home\': \'home/home.html\'' + eol,
-                  '        }[name];' + eol,
-                  '      });' + eol,
-                  '    }]);' + eol,
-                  '}());'].join('');
+      expected = [
+        '(function () {' + EOL,
+        '  angular' + EOL,
+        '    .module(\'test\')' + EOL,
+        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
+        '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
+        '        return {' + EOL,
+        '          \'hello\': \'home/hello/hello.html\',' + EOL,
+        '          \'home\': \'home/home.html\'' + EOL,
+        '        }[name];' + EOL,
+        '      });' + EOL,
+        '    }]);' + EOL,
+        '}());'
+      ].join('');
 
-      stream.on('data', function (file) {
+      stream.on('data', (file) => {
         assert(file.contents.toString() === expected);
         assert(file.path === 'component-templates.js');
         done();

@@ -1,5 +1,6 @@
 'use strict';
 import babel from 'gulp-babel';
+import babelCompiler from 'babel-core';
 import del from 'del';
 import gulp from 'gulp';
 import eslint from 'gulp-eslint';
@@ -42,12 +43,16 @@ gulp.task('compile', ['clean', 'lint'], () => {
 gulp.task('build', ['compile']);
 
 gulp.task('test', ['build'], (cb) => {
-  gulp.src([destDir + '*/*.js', '!' + testFiles])
+  gulp.src([destDir + '*.js', '!' + testFiles])
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
     .on('finish', () => {
       gulp.src([testFiles])
-        .pipe(mocha())
+        .pipe(mocha({
+          compilers: {
+            js: babelCompiler
+          }
+        }))
         .pipe(istanbul.writeReports())
         .on('end', cb);
     });

@@ -1,13 +1,13 @@
 'use strict';
-var _ = require('lodash')
-  , eol = require('os').EOL
-  , gutil = require('gulp-util')
-  , path = require('path')
-  , pkg = require('../package.json')
-  , through = require('through2');
+import _ from 'lodash';
+import {EOL} from 'os';
+import gutil from 'gulp-util';
+import path from 'path';
+import pkg from '../package.json';
+import through from 'through2';
 
-module.exports = function (options) {
-  var files = []
+export default function (options) {
+  let files = []
     , content = ''
     , defaults, footer, header;
 
@@ -19,15 +19,19 @@ module.exports = function (options) {
 
   options = _.merge(defaults, options);
 
-  header = ['(function () {' + eol,
-            '  angular' + eol,
-            '    .module(\'<%= moduleName %>\')' + eol,
-            '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + eol].join('');
+  header = [
+    '(function () {' + EOL,
+    '  angular' + EOL,
+    '    .module(\'<%= moduleName %>\')' + EOL,
+    '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL
+  ].join('');
 
-  footer = ['    }]);' + eol,
-            '}());'].join('');
+  footer = [
+    '    }]);' + EOL,
+    '}());'
+  ].join('');
 
-  return through.obj(function (file, encoding, next) {
+  return through.obj((file, encoding, next) => {
     if (!file || file.isNull()) {
       return next();
     }
@@ -40,31 +44,32 @@ module.exports = function (options) {
 
     next();
   }, function (callback) {
-    var templates;
+    let templates;
 
     if (files.length > 0) {
-      content = files.map(function (file) {
-        var component;
+      content = files.map((file) => {
+        let component;
         // `'component-name': `
         component = '          \'' + path.basename(file.path).replace(options.extension, '') + '\': ';
         // `'component-name': 'relative/path/to/component-name.html'
         component += '\'' + path.relative(file.base, file.path).replace(/\\/g, '/') + '\'';
         return component;
-      }).join(',' + eol);
+      }).join(',' + EOL);
       // $componentLoaderProvider.setTemplateMapping(function (name) {
       //   return {
       //     'component-name': 'relative/path/to/component-name.html'
       //   }[name];
+      // });
       content = [
-                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + eol,
-                  '        return {' + eol
-                ].join('') + content + eol;
-      content += ['        }[name];' + eol,
-                 '      });' + eol].join('');
+                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
+                  '        return {' + EOL
+                ].join('') + content + EOL;
+      content += ['        }[name];' + EOL,
+                 '      });' + EOL].join('');
     }
 
     templates = _.template(header + content + footer)(options);
     this.push(new gutil.File({base: '', path: options.fileName, contents: new Buffer(templates)}));
     callback();
   });
-};
+}
