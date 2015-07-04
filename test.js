@@ -3,7 +3,7 @@
 var assert = require('assert')
   , eol = require('os').EOL
   , gutil = require('gulp-util')
-  , ngNewRouterTemplates = require('./');
+  , ngNewRouterTemplates = require('./lib/');
 
 describe('gulp-ng-new-router-templates', function () {
   describe('no file input', function () {

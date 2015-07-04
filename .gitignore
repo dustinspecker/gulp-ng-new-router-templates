@@ -1,3 +1,6 @@
+# compiled
+lib/
+
 # Logs
 logs
 *.log
@@ -26,3 +29,6 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Mac
+.DS_Store

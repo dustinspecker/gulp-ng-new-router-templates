@@ -3,7 +3,7 @@ var _ = require('lodash')
   , eol = require('os').EOL
   , gutil = require('gulp-util')
   , path = require('path')
-  , pkg = require('./package.json')
+  , pkg = require('../package.json')
   , through = require('through2');
 
 module.exports = function (options) {
