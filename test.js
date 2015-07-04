@@ -12,11 +12,11 @@ describe('gulp-ng-new-router-templates', () => {
         , expected;
 
       expected = [
-        '(function () {' + EOL,
-        '  angular' + EOL,
-        '    .module(\'app\')' + EOL,
-        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
-        '    }]);' + EOL,
+        `(function () {${EOL}`,
+        `  angular${EOL}`,
+        `    .module('app')${EOL}`,
+        `    .config(['$componentLoaderProvider', function ($componentLoaderProvider) {${EOL}`,
+        `    }]);${EOL}`,
         '}());'
       ].join('');
 
@@ -37,16 +37,16 @@ describe('gulp-ng-new-router-templates', () => {
         , expected;
 
       expected = [
-        '(function () {' + EOL,
-        '  angular' + EOL,
-        '    .module(\'app\')' + EOL,
-        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
-        '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
-        '        return {' + EOL,
-        '          \'home\': \'home/home.tpl.html\'' + EOL,
-        '        }[name];' + EOL,
-        '      });' + EOL,
-        '    }]);' + EOL,
+        `(function () {${EOL}`,
+        `  angular${EOL}`,
+        `    .module('app')${EOL}`,
+        `    .config(['$componentLoaderProvider', function ($componentLoaderProvider) {${EOL}`,
+        `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
+        `        return {${EOL}`,
+        `          'home': 'home/home.tpl.html'${EOL}`,
+        `        }[name];${EOL}`,
+        `      });${EOL}`,
+        `    }]);${EOL}`,
         '}());'
       ].join('');
 
@@ -77,17 +77,17 @@ describe('gulp-ng-new-router-templates', () => {
       });
 
       expected = [
-        '(function () {' + EOL,
-        '  angular' + EOL,
-        '    .module(\'test\')' + EOL,
-        '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL,
-        '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
-        '        return {' + EOL,
-        '          \'hello\': \'home/hello/hello.html\',' + EOL,
-        '          \'home\': \'home/home.html\'' + EOL,
-        '        }[name];' + EOL,
-        '      });' + EOL,
-        '    }]);' + EOL,
+        `(function () {${EOL}`,
+        `  angular${EOL}`,
+        `    .module('test')${EOL}`,
+        `    .config(['$componentLoaderProvider', function ($componentLoaderProvider) {${EOL}`,
+        `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
+        `        return {${EOL}`,
+        `          'hello': 'home/hello/hello.html',${EOL}`,
+        `          'home': 'home/home.html'${EOL}`,
+        `        }[name];${EOL}`,
+        `      });${EOL}`,
+        `    }]);${EOL}`,
         '}());'
       ].join('');
 

@@ -20,14 +20,14 @@ export default function (options) {
   options = _.merge(defaults, options);
 
   header = [
-    '(function () {' + EOL,
-    '  angular' + EOL,
-    '    .module(\'<%= moduleName %>\')' + EOL,
-    '    .config([\'$componentLoaderProvider\', function ($componentLoaderProvider) {' + EOL
+    `(function () {${EOL}`,
+    `  angular${EOL}`,
+    `    .module('<%= moduleName %>')${EOL}`,
+    `    .config(['$componentLoaderProvider', function ($componentLoaderProvider) {${EOL}`
   ].join('');
 
   footer = [
-    '    }]);' + EOL,
+    `    }]);${EOL}`,
     '}());'
   ].join('');
 
@@ -49,10 +49,10 @@ export default function (options) {
     if (files.length > 0) {
       content = files.map((file) => {
         let component;
-        // `'component-name': `
-        component = '          \'' + path.basename(file.path).replace(options.extension, '') + '\': ';
-        // `'component-name': 'relative/path/to/component-name.html'
-        component += '\'' + path.relative(file.base, file.path).replace(/\\/g, '/') + '\'';
+        // 'component-name':
+        component = `          '${path.basename(file.path).replace(options.extension, '')}': `;
+        // 'component-name': 'relative/path/to/component-name.html'
+        component += `'${path.relative(file.base, file.path).replace(/\\/g, '/')}'`;
         return component;
       }).join(',' + EOL);
       // $componentLoaderProvider.setTemplateMapping(function (name) {
@@ -61,15 +61,19 @@ export default function (options) {
       //   }[name];
       // });
       content = [
-                  '      $componentLoaderProvider.setTemplateMapping(function (name) {' + EOL,
-                  '        return {' + EOL
+                  `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
+                  `        return {${EOL}`
                 ].join('') + content + EOL;
-      content += ['        }[name];' + EOL,
-                 '      });' + EOL].join('');
+      content += [`        }[name];${EOL}`,
+                 `      });${EOL}`].join('');
     }
 
     templates = _.template(header + content + footer)(options);
-    this.push(new gutil.File({base: '', path: options.fileName, contents: new Buffer(templates)}));
+    this.push(new gutil.File({
+      base: '',
+      path: options.fileName,
+      contents: new Buffer(templates)
+    }));
     callback();
   });
 }
