@@ -61,9 +61,9 @@ export default function (options) {
       //   }[name];
       // });
       content = [
-                  `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
-                  `        return {${EOL}`
-                ].join('') + content + EOL;
+        `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
+        `        return {${EOL}`
+      ].join('') + content + EOL;
       content += [`        }[name];${EOL}`,
                  `      });${EOL}`].join('');
     }
