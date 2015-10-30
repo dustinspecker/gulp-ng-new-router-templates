@@ -31,10 +31,7 @@ gulp.task('lint', () => {
 
 gulp.task('compile', ['clean', 'lint'], () => {
   return gulp.src(srcFiles)
-    .pipe(babel({
-      auxiliaryCommentBefore: 'istanbul ignore next',
-      modules: 'common'
-    }))
+    .pipe(babel())
     .pipe(gulp.dest(destDir));
 });
 
