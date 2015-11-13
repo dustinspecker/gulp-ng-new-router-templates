@@ -6,7 +6,7 @@ import path from 'path';
 import pkg from '../package.json';
 import through from 'through2';
 
-export default function (options) {
+module.exports = function (options) {
   let files = []
     , content = ''
     , defaults, footer, header;
@@ -76,4 +76,4 @@ export default function (options) {
     }));
     callback();
   });
-}
+};
