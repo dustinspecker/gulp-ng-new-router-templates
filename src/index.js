@@ -1,79 +1,77 @@
-'use strict';
-import _ from 'lodash';
-import {EOL} from 'os';
-import gutil from 'gulp-util';
-import path from 'path';
-import pkg from '../package.json';
-import through from 'through2';
+'use strict'
+import _ from 'lodash'
+import {EOL} from 'os'
+import gutil from 'gulp-util'
+import path from 'path'
+import pkg from '../package.json'
+import through from 'through2'
 
 module.exports = function (options) {
-  let files = []
-    , content = ''
-    , defaults, footer, header;
+  const files = []
+  let content = ''
 
-  defaults = {
+  const defaults = {
     extension: '.tpl.html',
     fileName: 'templates.js',
     moduleName: 'app'
-  };
+  }
 
-  options = _.merge(defaults, options);
+  const opts = _.merge(defaults, options)
 
-  header = [
+  const header = [
     `(function () {${EOL}`,
     `  angular${EOL}`,
     `    .module('<%= moduleName %>')${EOL}`,
     `    .config(['$componentLoaderProvider', function ($componentLoaderProvider) {${EOL}`
-  ].join('');
+  ].join('')
 
-  footer = [
-    `    }]);${EOL}`,
-    '}());'
-  ].join('');
+  const footer = [
+    `    }])${EOL}`,
+    '}())'
+  ].join('')
 
   return through.obj((file, encoding, next) => {
     if (!file || file.isNull()) {
-      return next();
+      return next()
     }
 
     if (file.isStream()) {
-      return this.emit('error', new gutil.PluginError(pkg.name, 'Streaming not supported'));
+      return this.emit('error', new gutil.PluginError(pkg.name, 'Streaming not supported'))
     }
 
-    files.push(file);
+    files.push(file)
 
-    next();
+    next()
   }, function (callback) {
-    let templates;
-
     if (files.length > 0) {
-      content = files.map((file) => {
-        let component;
+      content = files.map(file => {
+        let component
         // 'component-name':
-        component = `          '${path.basename(file.path).replace(options.extension, '')}': `;
+        component = `          '${path.basename(file.path).replace(opts.extension, '')}': `
         // 'component-name': 'relative/path/to/component-name.html'
-        component += `'${path.relative(file.base, file.path).replace(/\\/g, '/')}'`;
-        return component;
-      }).join(',' + EOL);
+        component += `'${path.relative(file.base, file.path).replace(/\\/g, '/')}'`
+        return component
+      }).join(`,${EOL}`)
       // $componentLoaderProvider.setTemplateMapping(function (name) {
       //   return {
       //     'component-name': 'relative/path/to/component-name.html'
-      //   }[name];
-      // });
+      //   }[name]
+      // })
       content = [
         `      $componentLoaderProvider.setTemplateMapping(function (name) {${EOL}`,
         `        return {${EOL}`
-      ].join('') + content + EOL;
-      content += [`        }[name];${EOL}`,
-                 `      });${EOL}`].join('');
+      ].join('') + content + EOL
+      content += [`        }[name]${EOL}`,
+                 `      })${EOL}`].join('')
     }
 
-    templates = _.template(header + content + footer)(options);
+    const templates = _.template(header + content + footer)(opts)
+    /* eslint no-invalid-this: 0 */
     this.push(new gutil.File({
       base: '',
-      path: options.fileName,
+      path: opts.fileName,
       contents: new Buffer(templates)
-    }));
-    callback();
-  });
-};
+    }))
+    callback()
+  })
+}
