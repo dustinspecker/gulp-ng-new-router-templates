@@ -50,6 +50,7 @@ module.exports = function (options) {
         component = `          '${path.basename(file.path).replace(opts.extension, '')}': `
         // 'component-name': 'relative/path/to/component-name.html'
         component += `'${path.relative(file.base, file.path).replace(/\\/g, '/')}'`
+
         return component
       }).join(`,${EOL}`)
       // $componentLoaderProvider.setTemplateMapping(function (name) {
