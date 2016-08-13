@@ -6,6 +6,8 @@
 
 > Gulp plugin for injecting template paths into $componentLoaderProvider
 
+**[NO LONGER MAINTAINED AS THIS ROUTER WAS DEPRECATED BY THE ANGULAR TEAM](https://docs.angularjs.org/guide/component-router)**
+
 ## Install
 `npm install --save-dev gulp-ng-new-router-templates`
 
